@@ -1,17 +1,44 @@
-{% for material in materials%}
-<div class="w3-container">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <div class="w3-card-4" style="width:300px">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style media="screen">
+
+</style>
+{% for material in materials %}
+  <div class="w3-card-4 card_mat"  style="width:300px;margin-top:20px; margin-left:30px; float:left" >
     <header class="w3-container w3-light-grey">
       <h3>{{material.name}}</h3>
     </header>
     <div class="w3-container">
       <p>{{material.color}}</p>
       <hr>
-      <p style="text-align:center">{{material.price}}</p><br>
+      <p style="text-align:center">${{material.price}}</p><br>
     </div>
-    <button class="w3-button w3-block w3-dark-grey">View Company</button>
+    <div class="w3-container company" id="{{material.pk}}" style="display:none">
+      <strong><p>{{material.supplier.name}}</p></strong>
+      <p>{{material.supplier.location}}</p>
+
+      <hr>
+    </div>
+
+    <button onclick="openCompany({{material.pk}})"  class="w3-button w3-block w3-dark-grey {{material.pk}}">View Company</button>
   </div>
-</div>
-<br>
 {% endfor %}
+<script>
+  var bool = true
+  function openCompany(c) {
+    console.log(c);
+    if(bool){
+      $("#"+c ).show()
+      $("."+c ).html("Hide")
+      bool = false
+    }
+    else {
+      $("#"+c ).hide()
+      $("."+c ).html("View Company")
+      bool = true
+    }
+
+
+  }
+  // for actions
+
+</script>
