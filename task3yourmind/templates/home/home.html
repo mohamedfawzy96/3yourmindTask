@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1 {font-family: "Montserrat", sans-serif}
+img {margin-bottom: -7px}
+.w3-row-padding img {margin-bottom: 12px}
+</style>
+<body>
+
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-content" style="max-width:1500px">
+
+<!-- Header -->
+<div class="w3-opacity">
+<span style="opacity:0" class="w3-button w3-xxlarge w3-white w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+<div class="w3-clear"></div>
+<header class="w3-center w3-margin-bottom">
+  <h1><b>3yourmind Task</b></h1>
+  <p><b>Please attach below your stl­file.</b></p>
+     <form action="https://api.3yourmind.com/v1/uploads/<uuid>" method="POST" enctype="multipart/form-data" >
+         {% csrf_token %}
+         <p class="w3-padding-16">
+         <input style="width:230px" type="file"  name="image"  id='settings_image'>
+         </p>
+         <p class="w3-padding-16"><button type="file" class="w3-button w3-black" onclick="myFunction()">Get Price</button></p>
+     </form>
+</header>
+</div>
+
+<!-- Photo Grid -->
+<div class="w3-row" id="myGrid" style="margin-bottom:128px">
+
+</div>
+
+<!-- End Page Content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:128px">
+  <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+<script>
+$(document).ready(function() {
+  // for actions
+  $(document).on('submit', '.action_forms', function (event) {
+            //console.log('hi22222');
+            var shareForm = $(this).attr('shareForm')
+            var comment = $(this).attr('comment')
+
+            if(shareForm=='true'){
+              $('#share_post_btn_id').addClass('disabled_btn')
+              $('#share_post_btn_id').prop("disabled", true)
+            }
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function(response) {
+                    console.log(response)
+                    /// this happens when post share is successful
+                    if(shareForm=='true'){
+                      var object= jQuery.parseJSON(response);
+                      open_share_done_pop(object)
+                    }
+
+                    if(comment=='true')
+                        comment_ui(response)
+                },
+                error: function (error) {
+                  if(shareForm=='true')
+                    open_share_error_pop()                }
+            });
+            return false;
+        });
+    /// for pop ups
+
+});
+</script>
+
+</body>
+</html>

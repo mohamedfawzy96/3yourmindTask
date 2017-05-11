@@ -1,0 +1,17 @@
+{% for material in materials%}
+<div class="w3-container">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <div class="w3-card-4" style="width:300px">
+    <header class="w3-container w3-light-grey">
+      <h3>{{material.name}}</h3>
+    </header>
+    <div class="w3-container">
+      <p>{{material.color}}</p>
+      <hr>
+      <p style="text-align:center">{{material.price}}</p><br>
+    </div>
+    <button class="w3-button w3-block w3-dark-grey">View Company</button>
+  </div>
+</div>
+<br>
+{% endfor %}
